@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Testing d3</title>
+	<style type="text/css">
+
+		rect:hover {
+			opacity: .5;
+		}
+		rect:active {
+			opacity: .2;
+			fill: black;
+		}
+
+	</style>
+</head>
+<body>
+
+
+
+
+	<script type="text/javascript" src="d3.js" ></script>
+	<script type="text/javascript" >
+		let dataArray = [],
+		 width = 1000,
+		 height = 1000,
+
+		canvas = d3.select("body")
+			.append("svg")
+			.attr("width", width)
+			.attr("height", height);
+
+		for(var i = 1; i <= 400; i++){
+			dataArray.push(i);
+		}	
+
+		let bars = canvas.selectAll("rect")
+				.data(dataArray)
+				.enter()
+					.append("rect")
+						.attr("width", 10)
+						.attr("height", 0 )
+						.attr("x", (value, index)=>{
+							return index * 15;
+						})
+						.attr("fill", (value)=>{
+							return "red";
+						})
+						.attr("title", (value)=>{
+							return "Hey this is " + value;
+						});
+
+
+				
+		bars.transition()
+		.duration(1000)
+			.delay(500)
+			.attr("fill", "blue")
+			.attr("height", (value, index)=>{
+				return value * 10;
+			})
+			.on('end', (value, index)=>{
+				console.log("finished");
+			});		
+
+	</script>	
+</body>
+</html>
